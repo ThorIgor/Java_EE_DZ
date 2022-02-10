@@ -1,9 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>Create book</title>
 </head>
 <body>
-<form>
+<form method="post" action="/book/create">
     <h3>Title</h3>
     <input name = "title">
     <br />
@@ -13,7 +13,7 @@
     <h3>Author:</h3>
     <input name = "author">
     <br />
-    <button>Save</button>
+    <button type = "submit">Save</button>
 </form>
 </body>
 </html>

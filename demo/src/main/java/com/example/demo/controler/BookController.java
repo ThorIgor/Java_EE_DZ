@@ -7,19 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/book")
 public class BookController {
+    ArrayList<BookDto> list = new ArrayList<BookDto>();
+
     @GetMapping("/create")
-    public String bookFormGet(Model model) {
-        BookDto bookDto = new BookDto();
-        model.addAttribute("bookDto", bookDto);
+    public String bookFormGet() {
         return "book-create";
     }
 
     @PostMapping("/create")
-    public String saveBook(BookDto bookDto, Model model) {
-        model.addAttribute("newBook", bookDto);
-        return "book-create";
+    public String saveBook(BookDto bookDto) {
+        list.add(bookDto);
+        return "redirect:/book/list";
+    }
+
+    @GetMapping("/list")
+    public String bookListGet(Model model) {
+        model.addAttribute("list", list);
+        return "book-list";
     }
 }
