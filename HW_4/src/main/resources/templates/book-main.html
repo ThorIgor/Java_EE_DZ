@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body>
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<form method="post" action="/book/main">
+    Title: <input name = "title">
+    <br />
+    ISBN:  <input name = "isbn">
+    <br />
+    Author:<input name = "author">
+    <br />
+    <button type = "submit">Save</button>
+</form>
+<form method="get">
+    Search:<input name = "search">
+</form>
+<table>
+    <tread>
+        <th>Title</th>
+        <th>ISBN</th>
+        <th>Author</th>
+    </tread>
+    <tbody>
+    <tr th:each="book: ${list}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.author}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
