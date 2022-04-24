@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+<body>
+<div>
+    <table>
+        <thead>
+        <th>id</th>
+        <th>title</th>
+        <th>isbn</th>
+        <th>author</th>
+        </thead>
+        <tbody id="booksTable">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.author}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
