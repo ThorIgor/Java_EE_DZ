@@ -87,7 +87,6 @@
                 },
                 error: function (response) {
                     $('#errors_text').empty();
-                    console.log(response);
                     response.responseJSON.forEach(function (text) {
                         $('#errors_text').append(text).append('<br>');
                     });

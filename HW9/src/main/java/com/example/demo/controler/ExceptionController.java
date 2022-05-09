@@ -1,15 +1,13 @@
 package com.example.demo.controler;
 
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -18,16 +16,9 @@ import javax.validation.ConstraintViolationException;
 public class ExceptionController {
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public String handle(final ConstraintViolationException ex, Model model) {
-        model.addAttribute("errors", ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet()));
-        return "registration";
+    public ResponseEntity<Set<String>> handleError(ConstraintViolationException exception){
+        Set<String> errors = exception.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage).collect(Collectors.toSet());
+        return ResponseEntity.badRequest().body(errors);
     }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    public ResponseEntity<Set<String>> handle(final MethodArgumentNotValidException ex) {
-        Set<String> strings = ex.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toSet());
-        return ResponseEntity.badRequest().body(strings);
-    }
-
 }

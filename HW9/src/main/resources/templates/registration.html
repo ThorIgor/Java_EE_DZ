@@ -3,24 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 
 <h2>Registration</h2>
 
 <form id = "createForm" method="post" action="/save_user">
-    Username: <input name = "login"/>
+    Username: <input id = "login"/>
     <br />
-    Password:  <input name = "password"/>
+    Password:  <input id = "password"/>
     <br />
     <input type="submit" id="registrationButton"/>
 </form>
 
-<div>
-    <ul th:each="error: ${errors}">
-        <li th:text="${error}"></li>
-    </ul>
+<div id = "success_response">
+
 </div>
+
+<div id = "errors_list">
+
+</div>
+
+<script>
+    $(function () {
+        $("#registrationButton").click(function (e){
+            e.preventDefault();
+            let login = $('#login').val();
+            let password = $('#password').val();
+            $.ajax({
+                type: 'POST',
+                url: '/save_user',
+                data: "login="+login+"&password="+password,
+                success: function (response){
+                    $('#errors_list').empty();
+                    $('#createForm').empty();
+                    $('#success_response').append('<a href="/login">'+ 'Login page' + '</a>');
+                },
+                error: function (response){
+                    $('#errors_list').empty();
+                    let readJSON = response.responseJSON;
+                    readJSON.forEach(function (error){
+                        $('#errors_list').append(error).append("<br>");
+                    })
+                }
+
+            })
+        })
+    })
+</script>
 
 </body>
 </html>
